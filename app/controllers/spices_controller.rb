@@ -8,7 +8,7 @@ class SpicesController < ApplicationController
 
         #Get/spices/:id
     def show
-        spice = Spice.find_by(id: params[:id])
+        spice = find_by_id
         if spice
             render json: spice
         else
@@ -24,7 +24,7 @@ class SpicesController < ApplicationController
 
     #destroy
     def destroy
-        spice = Spice.find_by(id: params[:id])
+        spice = find_by_id
         if spice
             spice.destroy
             head :no_content
@@ -35,7 +35,7 @@ class SpicesController < ApplicationController
 
     #update
     def update
-        spice = Spice.find_by(id: params[:id])
+        spice = find_by_id
         if spice
             spice.update(spice_params)
             render json: spice, status: :accepted
@@ -47,6 +47,10 @@ class SpicesController < ApplicationController
 
     #all methods below are private
     private
+
+    def find_by_id
+        Spice.find_by(id: params[:id])
+    end
 
         def spice_params
             params.permit(:title, :description, :notes, :rating)
